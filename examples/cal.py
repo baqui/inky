@@ -11,6 +11,8 @@ import inkyphat
 
 print("""Inky pHAT: Calendar
 
+hello world !!!!!
+
 Draws a calendar for the current month to your Inky pHAT.
 
 This example uses a sprite sheet of numbers and month names which are
@@ -60,7 +62,7 @@ def print_digit(position, digit, colour):
 
     """
     o_x, o_y = position
-    
+
     num_margin = 2
     num_width = 6
     num_height = 7
