@@ -30,7 +30,7 @@ with open('skm.csv','w') as f1:
         hour = el.find('span', attrs={'class': 'schedule__hour'}).text
         minutes = el.find('span', attrs={'class': 'schedule__minutes'}).text
         train_type = el.find('span', attrs={'class': 'schedule__traintype'})
-        train_type = train_type.text if train_type else ''
+        train_type = train_type.text[1] if train_type else 0
         row = "{}:{} {}".format(hour, minutes, train_type).split(' ')
         print row
         writer.writerow(row)
