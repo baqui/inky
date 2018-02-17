@@ -7,12 +7,18 @@ import calendar
 import csv
 from PIL import Image, ImageFont
 import inkyphat
+import os
+
 
 # INIT
 inkyphat.set_border(inkyphat.BLACK)
-text = Image.open("resources/calendar.png")
+skm_timetable_file = os.path.abspath("/home/pi/inky/examples/skm.csv")
+calendar_file = os.path.abspath("/home/pi/inky/examples/resources/calendar.png")
+background_file = os.path.abspath("/home/pi/inky/examples/resources/empty-backdrop.png")
+
+text = Image.open(calendar_file)
 text_mask = inkyphat.create_mask(text, [inkyphat.WHITE])
-inkyphat.set_image("resources/empty-backdrop.png")
+inkyphat.set_image(background_file)
 
 col_w = 20
 col_h = 13
@@ -70,33 +76,25 @@ def print_number(position, number, colour):
 
 skm_data = []
 
-skm_timetable = open('skm.csv', 'r')
+skm_timetable = open(skm_timetable_file, 'r')
 skm_reader = csv.reader(skm_timetable, delimiter='\t', lineterminator='\n')
 
 for row in skm_reader:
     train_time = row[0].split(':')
     skm_data.append([train_time[0], train_time[1], row[1]])
 
-
-
-
-
-# TODO find closes to current hour -> index
-skm_from = 50
-# then remove passed
+skm_from = 0
 skm_to = skm_from + rows
 closest_trains = skm_data[skm_from:skm_to]
-print closest_trains
-# Step through each week
+
 for row, train in enumerate(closest_trains):
     y = (col_h + 1) * row
     y += cal_y + 1
 
-    # And each day in the week
     for col, number in enumerate(train):
         x = (col_w + 1) * col
         x += cal_x + 1
-        number = number if int(number) >= 10 else '0' + str(number)
+        number = number if int(number) >= 10 else '0' + str(int(number))
         print_number((x+3, y+3), number, inkyphat.RED if col == 2 else inkyphat.WHITE)
 
 # And show it!

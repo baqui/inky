@@ -4,10 +4,12 @@
 
 import csv
 import datetime
+import os
 
 skm_data = []
+skm_timetable_file = os.path.abspath("/home/pi/inky/examples/skm.csv")
 
-with open('skm.csv','r') as f1:
+with open(skm_timetable_file,'r') as f1:
     reader = csv.reader(f1, delimiter='\t',lineterminator='\n',)
 
     #read skm data
@@ -18,7 +20,7 @@ with open('skm.csv','r') as f1:
             skm_data.append(data_row)
 
 
-with open('skm.csv','w') as f1:
+with open(skm_timetable_file,'w') as f1:
     writer = csv.writer(f1, delimiter='\t',lineterminator='\n',)
 
     #write data to csv

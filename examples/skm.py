@@ -8,6 +8,7 @@ import urllib
 import csv
 from datetime import datetime
 from bs4 import BeautifulSoup
+import os
 
 skm_from = '6064' #Gdynia Leszcznki
 skm_to = '7567' #Gdańsk śródmieście
@@ -24,7 +25,9 @@ soup = BeautifulSoup(page, 'html.parser')
 
 elements = soup.find_all('div', attrs={'class': 'schedule__row'})
 
-with open('skm.csv','w') as f1:
+skm_timetable_file = os.path.abspath("/home/pi/inky/examples/skm.csv")
+
+with open(skm_timetable_file,'w') as f1:
     writer=csv.writer(f1, delimiter='\t',lineterminator='\n',)
     for index, el in enumerate(elements):
         hour = el.find('span', attrs={'class': 'schedule__hour'}).text
