@@ -4,9 +4,8 @@
 import datetime
 import time
 import calendar
-
+import csv
 from PIL import Image, ImageFont
-
 import inkyphat
 
 # INIT
@@ -69,10 +68,24 @@ def print_number(position, number, colour):
 
 #TODO get data from skm.csv 6 first rows
 
-skm_data = [ [16, 19], [16, 29, 1], [16, 41], [16, 49, 1], [16, 59, 1], [17, 8, 2] ]
+skm_data = []
 
+skm_timetable = open('skm.csv', 'r')
+skm_reader = csv.reader(skm_timetable, delimiter='\t', lineterminator='\n')
+
+for row in skm_reader:
+    train_time = row[0].split(':')
+    skm_data.append([train_time[0], train_time[1], row[1]])
+
+# TODO find closes to current hour -> index
+skm_from = 50
+# then remove passed
+
+skm_to = skm_from + rows
+closest_trains = skm_data[skm_from:skm_to]
+print closest_trains
 # Step through each week
-for row, train in enumerate(skm_data):
+for row, train in enumerate(closest_trains):
     y = (col_h + 1) * row
     y += cal_y + 1
 
