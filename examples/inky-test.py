@@ -77,10 +77,13 @@ for row in skm_reader:
     train_time = row[0].split(':')
     skm_data.append([train_time[0], train_time[1], row[1]])
 
+
+
+
+
 # TODO find closes to current hour -> index
 skm_from = 50
 # then remove passed
-
 skm_to = skm_from + rows
 closest_trains = skm_data[skm_from:skm_to]
 print closest_trains
